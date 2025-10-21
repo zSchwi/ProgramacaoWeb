@@ -1,0 +1,27 @@
+<h1>🛍️ Produtos</h1>
+<div>
+    {% if user.is_authenticated %}
+    <p>Olá, {{ user.username }}! <a href="{% url 'logout' %}">Sair</a></p>
+    {% else %}
+    <a href="{% url 'login' %}">Entrar</a>
+    {% endif %}
+
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for product in products %}
+    <div style="border: 1px solid #ccc; padding: 10px; width: 200px;">
+        <h3>{{ product.name }}</h3>
+        <p>R$ {{ product.price }}</p>
+
+        <a href="{% url 'product_detail' product.id %}">Ver detalhes</a>
+        <br>
+
+        <!-- 🔹 Botão para adicionar ao carrinho -->
+        <a href="{% url 'add_to_cart' product.id %}">🛒 Adicionar ao carrinho</a>
+    </div>
+    {% endfor %}
+</div>
+
+<hr>
+
+<a href="{% url 'cart_detail' %}">Ir para o carrinho 🛒</a>

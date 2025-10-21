@@ -1,0 +1,36 @@
+<h1>🛒 Meu Carrinho</h1>
+
+{% if items %}
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Produto</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+        <th>Subtotal</th>
+        <th>Ações</th>
+    </tr>
+
+    {% for item in items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>R$ {{ item.product.price }}</td>
+        <td>
+            <form action="{% url 'update_cart' item.id %}" method="post">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width: 50px;">
+                <button type="submit">Atualizar</button>
+            </form>
+        </td>
+        <td>R$ {{ item.subtotal }}</td>
+        <td>
+            <a href="{% url 'remove_from_cart' item.id %}">Remover</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Total: R$ {{ total }}</h3>
+
+{% else %}
+<p>Seu carrinho está vazio.</p>
+{% endif %}
