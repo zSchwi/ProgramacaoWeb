@@ -1,19 +1,36 @@
-<h1>Entrar</h1>
+{% extends 'base.html' %}
+{% block title %}Entrar{% endblock %}
 
-{% if error %}
-<p style="color:red">{{ error }}</p>
-{% endif %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <h3 class="text-center mb-4">Entrar</h3>
 
-<form method="post">
-    {% csrf_token %}
-    <label>Usuário:</label><br>
-    <input type="text" name="username" required><br><br>
+                {% if form.errors %}
+                <div class="alert alert-danger">Usuário ou senha incorretos.</div>
+                {% endif %}
 
-    <label>Senha:</label><br>
-    <input type="password" name="password" required><br><br>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Usuário</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Senha</label>
+                        {{ form.password|add_class:"form-control" }}
+                    </div>
 
-    <button type="submit">Entrar</button>
-</form>
+                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                </form>
 
-<br>
-<p>Não tem conta? <a href="/admin/">Crie pelo admin</a></p>
+                <p class="text-center mt-3">
+                    Não tem conta? <a href="/accounts/signup/">Cadastre-se</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
