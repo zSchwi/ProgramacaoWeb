@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from store.models import Product
 from .models import Cart, CartItem
 
-# 🔹 1. Ver o carrinho
+
 @login_required
 def cart_detail(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -11,7 +11,7 @@ def cart_detail(request):
     total = cart.total()
     return render(request, 'cart/cart_detail.html', {'cart': cart, 'items': items, 'total': total})
 
-# 🔹 2. Adicionar produto ao carrinho
+
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -21,11 +21,11 @@ def add_to_cart(request, product_id):
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     if not created:
         cart_item.quantity += 1
+        
     cart_item.save()
 
     return redirect('cart_detail')
 
-# 🔹 3. Remover produto do carrinho
 @login_required
 def remove_from_cart(request, item_id):
     cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)

@@ -30,9 +30,10 @@
                 </td>
                 <td>{{ item.quantity }}</td>
                 <td>R$ {{ item.product.price }}</td>
-                <td>R$ {{ item.get_total_price }}</td>
+                <td>R$ {{ total|floatformat:2 }}</td>
                 <td>
-                    <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm btn-danger">Remover</a>
+                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Remover</a>
+
                 </td>
             </tr>
             {% endfor %}
@@ -41,8 +42,8 @@
 </div>
 
 <div class="text-end mt-4">
-    <h4>Total: <span class="fw-bold text-success">R$ {{ cart.get_total_price }}</span></h4>
-    <a href="#" class="btn btn-success btn-lg mt-3">Finalizar Compra</a>
+    <h4>Total: <span class="fw-bold text-success">R$ {{ total|floatformat:2 }} </span></h4>
+    <a href="{% url 'product_list' %}" class="btn btn-success btn-lg mt-3">Finalizar Compra</a>
 </div>
 {% else %}
 <div class="alert alert-info text-center py-5">
