@@ -16,3 +16,8 @@ class CustomLoginForm(AuthenticationForm):
             'placeholder': 'Digite sua senha'
         })
     )
+    remember_me = forms.BooleanField(
+        required=False,
+        label='Lembrar-me',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )

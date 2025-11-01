@@ -55,7 +55,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  # adicionada internacionalização
+    'django.middleware.locale.LocaleMiddleware', 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,7 +73,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
-                'django.template.context_processors.i18n',  # adicionado
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -136,7 +136,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# adiciona pasta de traduções (opcional)
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
@@ -144,3 +143,8 @@ LOCALE_PATHS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Session: mantêm o usuário logado por mais tempo e renova a expiração a cada requisição
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 14  # 14 dias
+SESSION_SAVE_EVERY_REQUEST = True       # renova o tempo de sessão a cada requisição ativa
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False # não expira ao fechar o navegador

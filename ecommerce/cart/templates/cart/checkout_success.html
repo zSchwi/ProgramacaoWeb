@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="alert alert-success">
+      <h4 class="alert-heading">Compra finalizada com sucesso</h4>
+      <p>Pedido #{{ order.id }} criado. Obrigado pela sua compra.</p>
+      <p class="small text-muted">Os administradores podem visualizar os pedidos no painel administrativo.</p>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5>Resumo do pedido</h5>
+        <ul class="list-group mb-3">
+          {% for it in order.get_items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>{{ it.quantity }}x {{ it.name }}</div>
+              <span>R$ {{ it.subtotal }}</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item">(sem itens registrados)</li>
+          {% endfor %}
+        </ul>
+
+        <p class="lead">Total: <strong>R$ {{ order.get_total }}</strong></p>
+
+        <a href="{% url 'product_list' %}" class="btn btn-primary">Voltar para a loja</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

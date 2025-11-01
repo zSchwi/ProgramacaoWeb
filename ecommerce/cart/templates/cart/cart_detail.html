@@ -23,17 +23,16 @@
                     <div class="d-flex align-items-center">
                         {% if item.product.image %}
                         <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="me-3"
-                            style="width: 70px; height: 70px; object-fit: cover;">
+                            style="width: 200px; height: 100px; object-fit: fill;">
                         {% endif %}
                         <strong>{{ item.product.name }}</strong>
                     </div>
                 </td>
                 <td>{{ item.quantity }}</td>
                 <td>R$ {{ item.product.price }}</td>
-                <td>R$ {{ total|floatformat:2 }}</td>
+                <td>R$ {{ item.subtotal|floatformat:2 }}</td>
                 <td>
                     <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Remover</a>
-
                 </td>
             </tr>
             {% endfor %}
@@ -43,12 +42,12 @@
 
 <div class="text-end mt-4">
     <h4>Total: <span class="fw-bold text-success">R$ {{ total|floatformat:2 }} </span></h4>
-    <a href="{% url 'product_list' %}" class="btn btn-success btn-lg mt-3">Finalizar Compra</a>
+    <a href="{% url 'checkout' %}" class="btn btn-success btn-lg mt-3">Finalizar Compra</a>
 </div>
 {% else %}
 <div class="alert alert-info text-center py-5">
     <h5>Seu carrinho está vazio 😕</h5>
-    <a href="/" class="btn btn-primary mt-3">Voltar à loja</a>
+    <a href="{% url 'product_list' %}" class="btn btn-primary mt-3">Voltar à loja</a>
 </div>
 {% endif %}
 {% endblock %}

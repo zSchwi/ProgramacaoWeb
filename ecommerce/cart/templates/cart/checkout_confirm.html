@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Confirmar pedido</h3>
+
+        {% if items %}
+          <ul class="list-group mb-3">
+            {% for it in items %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{{ it.quantity }}x</strong> {{ it.product.name }}
+                </div>
+                <span>R$ {{ it.product.price|floatformat:2 }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+
+          <p class="lead">Total: <strong>R$ {{ total|floatformat:2 }}</strong></p>
+
+          <form method="post" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Finalizar Compra</button>
+            <a href="{% url 'cart_detail' %}" class="btn btn-secondary">Voltar ao carrinho</a>
+          </form>
+        {% else %}
+          <p>Seu carrinho está vazio.</p>
+          <a href="{% url 'product_list' %}" class="btn btn-primary">Continuar comprando</a>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
